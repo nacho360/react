@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import firebase from "../Config/firebase"
 import FormGroup from "../Components/Forms/FormGroup"
 import { Button } from "react-bootstrap"
+import EcommerceContext from "../Context/ecommerceContext"
 
 function Login(){
+    const context = useContext(EcommerceContext)
     const [form,setForm] = useState({email:'',password:''})
     const handleSubmit = async (event)=>{
         console.log("handleSubmit",form)
@@ -11,6 +13,7 @@ function Login(){
         try {
             const responseUser = await firebase.autenticacion.signInWithEmailAndPassword(form.email, form.password)
             console.log(responseUser)
+            context.loginUser(true)
         } catch(e) {
             console.log("Error", e)
             alert(e.message)

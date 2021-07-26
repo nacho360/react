@@ -7,19 +7,22 @@ import DetallePage from "./Pages/DetallePage"
 import Compra from "./Pages/Compra"
 import Menu from "./Components/Menu"
 import ABMPage from './Pages/ABMPage';
+import GlobalState from './Context/GlobalState';
 
 function App() {
 
   return (
-    <BrowserRouter>
-      <Menu />
-      <Route path="/home" exact component={Home} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/registro" exact component={RegistroPage} />
-      <Route path="/producto/:id" exact component={DetallePage} />
-      <Route path="/compra" exact component={Compra} />
-      <Route path="/catalogo" exact component={ABMPage} />
-    </BrowserRouter>
+    <GlobalState>
+      <BrowserRouter>
+        <Menu />
+        <Route path="/home" exact component={Home} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/registro" exact component={RegistroPage} />
+        <Route path="/producto/:id" exact component={DetallePage} />
+        <Route path="/compra" exact component={Compra} />
+        <Route path="/catalogo" exact component={ABMPage} />
+      </BrowserRouter>
+    </GlobalState>
   );
 }
 
