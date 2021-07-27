@@ -42,10 +42,10 @@ function RegistroPage(){
     return(
         <div className='container'>
             <form onSubmit={handleSubmit}>
-                <FormGroup type="text" label="Nombre" name="nombre" value={form.nombre} placeholder="Ingrese su nombre" onChange={handleChange}/>
-                <FormGroup type="text" label="Apellido" name="apellido" value={form.apellido} placeholder="Ingrese su apellido" onChange={handleChange}/>
-                <FormGroup type="email" label="Email" name="email" value={form.email} placeholder="Ingrese su email" onChange={handleChange}/>
-                <FormGroup type="password" label="Password" name="password" value={form.password} placeholder="Ingrese su contraseña" onChange={handleChange}/>
+                <FormGroup type="text" label="Nombre" name="nombre" value={form.nombre} placeholder="Ingrese su nombre" change={handleChange}/>
+                <FormGroup type="text" label="Apellido" name="apellido" value={form.apellido} placeholder="Ingrese su apellido" change={handleChange}/>
+                <FormGroup type="email" label="Email" name="email" value={form.email} placeholder="Ingrese su email" change={handleChange}/>
+                <FormGroup type="password" label="Password" name="password" value={form.password} placeholder="Ingrese su contraseña" change={handleChange}/>
                 <Button style={button.style} variant="primary" type="submit">Registrarse</Button>
                 <AlertCustom variant={alert.variant} text={alert.text}/>
             </form>

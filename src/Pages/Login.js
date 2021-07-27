@@ -3,9 +3,17 @@ import firebase from "../Config/firebase"
 import FormGroup from "../Components/Forms/FormGroup"
 import { Button } from "react-bootstrap"
 import EcommerceContext from "../Context/ecommerceContext"
+import AlertCustom from "../Components/AlertCustom"
+
+const button = {
+    style: {
+        marginTop:"10px",
+    }
+}
 
 function Login(){
     const context = useContext(EcommerceContext)
+    const [alert, setAlert] = useState({variant:"", text:""})
     const [form,setForm] = useState({email:'',password:''})
     const handleSubmit = async (event)=>{
         console.log("handleSubmit",form)
@@ -13,10 +21,15 @@ function Login(){
         try {
             const responseUser = await firebase.autenticacion.signInWithEmailAndPassword(form.email, form.password)
             console.log(responseUser)
-            context.loginUser(true)
+            const userInfo = await firebase.db.collection("usuarios")
+            .where("userId","==", responseUser.user.uid)
+            .get()
+            console.log("usuario", userInfo.docs[0]?.data().nombre)
+            context.loginUser(userInfo.docs[0]?.data())
+            setAlert({variant: "success", text: "Bienvenido " + userInfo.docs[0]?.data().nombre })
         } catch(e) {
             console.log("Error", e)
-            alert(e.message)
+            setAlert({variant: "danger", text: e.message })
         }
     }
     const handleChange = (event)=>{
@@ -30,7 +43,8 @@ function Login(){
             <form onSubmit={handleSubmit}>
                 <FormGroup label="Email" name="email" type="email" value={form.email} placeholder="Ingrese su correo electronico" change={handleChange}/>
                 <FormGroup label="Password" name="password" type="password" value={form.password} placeholder="Ingrese su contraseña" change={handleChange}/>
-                <Button type="submit" variant="primary">Login</Button>
+                <Button style={button.style} type="submit" variant="primary">Login</Button>
+                <AlertCustom variant={alert.variant} text={alert.text}/>
             </form>
         </div>
     )

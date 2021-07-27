@@ -1,8 +1,14 @@
 import React,{useState, useEffect} from "react"
-import { Form } from "react-bootstrap"
+import { Button, Container, Form, Spinner } from "react-bootstrap"
 import firebase from "../Config/firebase"
 import FormGroup from "../Components/Forms/FormGroup"
 import Producto from "../Components/Producto"
+
+const button = {
+    style: {
+        marginTop:"10px",
+    }
+}
 
 function ABMPage(){
     const [loading,setLoading] = useState(true)
@@ -79,14 +85,16 @@ function ABMPage(){
     
     if(loading){
         return(
-            <div>
-               loading...
-            </div>
+            <Container>
+                <Spinner animation="border" role="status" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            </Container>
             
         )
     }else{
         return(
-            <div className='container'>
+            <Container>
                 <h1>Listado de productos</h1>
                 {productos.map(producto => 
                     <Producto 
@@ -97,23 +105,16 @@ function ABMPage(){
                         clickEliminar={handleClickEliminar}
                     />
                 )}
-                <form onSubmit={handleSubmit}>
-                    <h1>Alta de producto</h1>
-                    <div>
-                        <label>Nombre</label>
-                        <input type="text" name="name" value={productoForm.name} onChange={handleChange}></input>
-                    </div>
-                    <div>
-                        <label>Precio</label>
-                        <input type="text" name="price" value={productoForm.price} onChange={handleChange}></input>
-                    </div>
-                    <div>
-                        <label>Descripcion</label>
-                        <input type="text" name="description" value={productoForm.description} onChange={handleChange}></input>
-                    </div>
-                    <button type="submit">Agregar</button>
-                </form>
-            </div>
+                <div>
+                    <form onSubmit={handleSubmit} style={{width: '50%'}}>
+                        <h1>Alta de producto</h1>
+                        <FormGroup label="Nombre" name="name" type="text" value={productoForm.name} placeholder="Ingrese el nombre del producto" change={handleChange}/>
+                        <FormGroup label="Precio" name="price" type="number" value={productoForm.price} placeholder="Ingrese el precio del producto" change={handleChange}/>
+                        <FormGroup label="Descripcion" name="description" type="text" value={productoForm.description} placeholder="Ingrese la descripcion del producto" change={handleChange}/>
+                        <Button style={button.style}type="submit">Agregar</Button>
+                    </form>
+                </div>
+            </Container>
         )
     }
 }

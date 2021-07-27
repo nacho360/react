@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react"
 import Producto from "../Components/Producto"
 import firebase from "../Config/firebase"
 import Spinner from 'react-bootstrap/Spinner'
+import { Container } from "react-bootstrap"
 
 function InicioPage(){
     const [loading,setLoading] = useState(true)
@@ -28,17 +29,19 @@ function InicioPage(){
     
     if(loading){
         return(
-            <Spinner animation="border" role="status" variant="primary">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
+            <Container>
+                <Spinner animation="border" role="status" variant="primary">
+                    <span className="visually-hidden">Loading...</span>
+                </Spinner>
+            </Container>
             
         )
     }else{
         return(
-            <div>
+            <Container>
                <h1>Productos</h1>
                {productos.map(producto=><Producto datos={{...producto.data(), id:producto.id}} />)}
-            </div>
+            </Container>
             
         )
     }

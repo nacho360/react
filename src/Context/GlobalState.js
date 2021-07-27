@@ -3,8 +3,10 @@ import EcommerceContext from './ecommerceContext'
 
 function GlobalState({children}) {
     const [userLogin, setUserLogin] = useState(false)
-    const loginUser = () => {
+    const [userInfo, setUserInfo] = useState({})
+    const loginUser = (user) => {
         setUserLogin(true)
+        setUserInfo(user)
     }
     const logoutUser = () => {
         setUserLogin(false)
@@ -15,7 +17,8 @@ function GlobalState({children}) {
             value={{
                 userLogin,
                 loginUser,
-                logoutUser
+                logoutUser,
+                userInfo
             }}
             >
                 {children}
